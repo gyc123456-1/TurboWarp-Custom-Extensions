@@ -132,6 +132,17 @@
 					}
 				}
 			},
+			{
+				opcode: 'runcode',
+				blockType: Scratch.BlockType.REPORTER,
+				text: '运行JavaScript代码 [code]',
+				arguments: {
+					code: {
+						type: Scratch.ArgumentType.STRING,
+						defaultValue: "'abc'.split('')"
+					}
+				}
+			},
 			]
 		};
 	}
@@ -182,6 +193,10 @@
 
 	codetotext(args) {
 		return String.fromCharCode(args.code);
+	}
+	
+	runcode(args) {
+		return eval(args.code);
 	}
 }
 
