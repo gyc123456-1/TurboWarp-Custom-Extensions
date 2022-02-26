@@ -143,6 +143,17 @@
 					}
 				}
 			},
+			{
+				opcode: 'runcodec',
+				blockType: Scratch.BlockType.COMMAND,
+				text: '运行JavaScript代码 [code]',
+				arguments: {
+					code: {
+						type: Scratch.ArgumentType.STRING,
+						defaultValue: "var a = 'helloworld!'"
+					}
+				}
+			},
 			]
 		};
 	}
@@ -197,6 +208,10 @@
 	
 	runcode(args) {
 		return eval(args.code);
+	}
+	
+	runcodec(args) {
+		eval(args.code);
 	}
 }
 
