@@ -32,6 +32,11 @@
 				text: '假'
 			},
 			{
+				opcode: 'n',
+				blockType: Scratch.BlockType.REPORTER,
+				text: '换行'
+			},
+			{
 				opcode: 'sanyuyunshuan',
 				blockType: Scratch.BlockType.REPORTER,
 				text: '如果 [b] 返回 [ONE] 否则返回 [TWO]',
@@ -143,6 +148,10 @@
 		return false
 	}
 
+	n() {
+		return '\n'
+	}
+	
 	sanyuyunshuan(args) {
 		if (args.b) {
 			return args.ONE
