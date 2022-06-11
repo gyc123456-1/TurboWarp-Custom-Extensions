@@ -21,6 +21,17 @@
 				}
 			},
 			{
+				opcode: 'stob',
+				blockType: Scratch.BlockType.BOOLEAN,
+				text: '[str]',
+				arguments: {
+					str: {
+						type: Scratch.ArgumentType.STRING,
+						defaultValue: 'true'
+					}
+				}
+			},
+			{
 				opcode: 'tr',
 				blockType: Scratch.BlockType.BOOLEAN,
 				text: '真'
@@ -253,8 +264,11 @@
 		};
 	}
 	strictlyEquals(args) {
-		// Note strict equality: Inputs must match exactly: in type, case, etc.
 		return args.ONE === args.TWO;
+	}
+	
+	stob(args) {
+		return args.str
 	}
 
 	tr() {
