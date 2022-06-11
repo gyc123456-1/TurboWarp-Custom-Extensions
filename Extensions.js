@@ -1,10 +1,9 @@
-﻿class StrictEqualityExtension {
+﻿class gycExtension {
 	getInfo() {
 		return {
 			color1: '#11ccff',
 			color2: '#0fb7e5',
 			id: 'gycExtension',
-			// change this if you make an actual extension!
 			name: 'gyc的扩展',
 			blocks: [{
 				opcode: 'strictlyEquals',
@@ -34,7 +33,17 @@
 			{
 				opcode: 'n',
 				blockType: Scratch.BlockType.REPORTER,
-				text: '换行'
+				text: '连接 [ONE] 和 [TWO] 并在中间添加换行',
+				arguments: {
+					ONE: {
+						type: Scratch.ArgumentType.STRING,
+						defaultValue: 'hello'
+					},
+					TWO: {
+						type: Scratch.ArgumentType.STRING,
+						defaultValue: 'world'
+					}
+				}
 			},
 			{
 				opcode: 'sanyuyunshuan',
@@ -154,6 +163,92 @@
 					}
 				}
 			},
+			{
+				opcode: 'get',
+				blockType: Scratch.BlockType.REPORTER,
+				text: 'GET [URL]',
+				arguments: {
+					URL: {
+						type: Scratch.ArgumentType.STRING,
+						defaultValue: 'https://extensions.turbowarp.org/hello.txt'
+					}
+				}
+			},
+			{
+				opcode: 'bitwiseLeftShift',
+				blockType: Scratch.BlockType.REPORTER,
+				text: '[LEFT] << [RIGHT]',
+				arguments: {
+					LEFT: {
+						type: Scratch.ArgumentType.NUMBER,
+						defaultValue: '2'
+					},
+					RIGHT: {
+						type: Scratch.ArgumentType.NUMBER,
+						defaultValue: '1'
+					}
+				}
+			},
+			{
+				opcode: 'bitwiseRightShift',
+				blockType: Scratch.BlockType.REPORTER,
+				text: '[LEFT] >> [RIGHT]',
+				arguments: {
+					LEFT: {
+						type: Scratch.ArgumentType.NUMBER,
+						defaultValue: '2'
+					},
+					RIGHT: {
+						type: Scratch.ArgumentType.NUMBER,
+						defaultValue: '1'
+					}
+				}
+			},
+			{
+				opcode: 'bitwiseAnd',
+				blockType: Scratch.BlockType.REPORTER,
+				text: '[LEFT] & [RIGHT]',
+				arguments: {
+					LEFT: {
+						type: Scratch.ArgumentType.NUMBER,
+						defaultValue: '3'
+					},
+					RIGHT: {
+						type: Scratch.ArgumentType.NUMBER,
+						defaultValue: '1'
+					}
+				}
+			},
+			{
+				opcode: 'bitwiseOr',
+				blockType: Scratch.BlockType.REPORTER,
+				text: '[LEFT] | [RIGHT]',
+				arguments: {
+					LEFT: {
+						type: Scratch.ArgumentType.NUMBER,
+						defaultValue: '1'
+					},
+					RIGHT: {
+						type: Scratch.ArgumentType.NUMBER,
+						defaultValue: '0'
+					}
+				}
+			},
+			{
+				opcode: 'bitwiseXor',
+				blockType: Scratch.BlockType.REPORTER,
+				text: '[LEFT] ^ [RIGHT]',
+				arguments: {
+					LEFT: {
+						type: Scratch.ArgumentType.NUMBER,
+						defaultValue: '1'
+					},
+					RIGHT: {
+						type: Scratch.ArgumentType.NUMBER,
+						defaultValue: '1'
+					}
+				}
+			}
 			]
 		};
 	}
@@ -170,8 +265,8 @@
 		return false
 	}
 
-	n() {
-		return '\n'
+	n(args) {
+		return args.ONE + '\n' + args.TWO
 	}
 	
 	sanyuyunshuan(args) {
@@ -207,151 +302,43 @@
 	}
 	
 	runcode(args) {
-		return eval(args.code);
+		var r = eval(args.code)
+		if (r == undefined) {
+			return ""
+		} else {
+			return r
+		}
 	}
 	
 	runcodec(args) {
 		eval(args.code);
 	}
+	
+	get(args) {
+		return fetch(args.URL)
+		  .then(r => r.text())
+		  .catch(() => '');
+	}
+	
+	bitwiseLeftShift({ LEFT, RIGHT }) {
+		return LEFT << RIGHT;
+	}
+
+	bitwiseRightShift({ LEFT, RIGHT }) {
+		return LEFT >> RIGHT;
+	}
+
+	bitwiseAnd({ LEFT, RIGHT }) {
+		return LEFT & RIGHT;
+	}
+
+	bitwiseOr({ LEFT, RIGHT }) {
+		return LEFT | RIGHT;
+	}
+
+	bitwiseXor({ LEFT, RIGHT }) {
+		return LEFT ^ RIGHT;
+	}
 }
 
-class Fetch {
-  getInfo () {
-    return {
-      id: 'fetch',
-      name: 'Fetch',
-      blocks: [
-        {
-          opcode: 'get',
-          blockType: Scratch.BlockType.REPORTER,
-          text: 'GET [URL]',
-          arguments: {
-            URL: {
-              type: Scratch.ArgumentType.STRING,
-              defaultValue: 'https://extensions.turbowarp.org/hello.txt'
-            }
-          }
-        }
-      ]
-    };
-  }
-
-  get (args) {
-    return fetch(args.URL)
-      .then(r => r.text())
-      .catch(() => '');
-  }
-}
-
-class Bitwise {
-  getInfo() {
-    return {
-      id: "Bitwise",
-      color1: '#2dc4c4',
-      color2: '#2dc4b3',
-      color3: '#29a395',
-      blocks: [
-        {
-          opcode: 'bitwiseLeftShift',
-          blockType: Scratch.BlockType.REPORTER,
-          text: '[LEFT] << [RIGHT]',
-          arguments: {
-            LEFT: {
-              type: Scratch.ArgumentType.NUMBER,
-              defaultValue: '2'
-            },
-            RIGHT: {
-              type: Scratch.ArgumentType.NUMBER,
-              defaultValue: '1'
-            }
-          }
-        },
-        {
-          opcode: 'bitwiseRightShift',
-          blockType: Scratch.BlockType.REPORTER,
-          text: '[LEFT] >> [RIGHT]',
-          arguments: {
-            LEFT: {
-              type: Scratch.ArgumentType.NUMBER,
-              defaultValue: '2'
-            },
-            RIGHT: {
-              type: Scratch.ArgumentType.NUMBER,
-              defaultValue: '1'
-            }
-          }
-        },
-        {
-          opcode: 'bitwiseAnd',
-          blockType: Scratch.BlockType.REPORTER,
-          text: '[LEFT] & [RIGHT]',
-          arguments: {
-            LEFT: {
-              type: Scratch.ArgumentType.NUMBER,
-              defaultValue: '3'
-            },
-            RIGHT: {
-              type: Scratch.ArgumentType.NUMBER,
-              defaultValue: '1'
-            }
-          }
-        },
-        {
-          opcode: 'bitwiseOr',
-          blockType: Scratch.BlockType.REPORTER,
-          text: '[LEFT] | [RIGHT]',
-          arguments: {
-            LEFT: {
-              type: Scratch.ArgumentType.NUMBER,
-              defaultValue: '1'
-            },
-            RIGHT: {
-              type: Scratch.ArgumentType.NUMBER,
-              defaultValue: '0'
-            }
-          }
-        },
-        {
-          opcode: 'bitwiseXor',
-          blockType: Scratch.BlockType.REPORTER,
-          text: '[LEFT] ^ [RIGHT]',
-          arguments: {
-            LEFT: {
-              type: Scratch.ArgumentType.NUMBER,
-              defaultValue: '1'
-            },
-            RIGHT: {
-              type: Scratch.ArgumentType.NUMBER,
-              defaultValue: '1'
-            }
-          }
-        }
-      ]
-    };
-  }
-
-  bitwiseLeftShift({ LEFT, RIGHT }) {
-    return LEFT << RIGHT;
-  }
-
-  bitwiseRightShift({ LEFT, RIGHT }) {
-    return LEFT >> RIGHT;
-  }
-
-  bitwiseAnd({ LEFT, RIGHT }) {
-    return LEFT & RIGHT;
-  }
-
-  bitwiseOr({ LEFT, RIGHT }) {
-    return LEFT | RIGHT;
-  }
-
-  bitwiseXor({ LEFT, RIGHT }) {
-    return LEFT ^ RIGHT;
-  }
-}
-
-
-Scratch.extensions.register(new StrictEqualityExtension());
-Scratch.extensions.register(new Fetch());
-Scratch.extensions.register(new Bitwise());
+Scratch.extensions.register(new gycExtension());
